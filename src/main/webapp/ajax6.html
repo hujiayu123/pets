@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>发送Ajax请求，显示宠物信息</title>
+</head>
+<body>
+<script type="text/javascript">
+  window.onload=function (){
+    document.getElementById("btn").onclick=function (){
+      var xhr=new XMLHttpRequest()
+      xhr.onreadystatechange=function (){
+        if (this.readyState == 4) {
+          if (this.status == 200) {
+            alert("连接成功")
+            alert(this.responseText)
+            //document.getElementById("mydiv").innerHTML = this.responseText
+            var petsList=JSON.parse(this.responseText)//数组中有多个宠物信息
+            var html=""
+            for (var i=0;i<petsList.length;i++){
+              var pets=petsList[i]
+              html+="<tr>"
+              html+="<td>"+(i+1)+"</td>"
+              html+="<td>"+pets.name+"</td>"
+              html+="<td>"+pets.age+"</td>"
+              html+="<td>"+pets.addr+"</td>"
+              html+="</tr>"
+            }
+            document.getElementById("petsbody").innerHTML=html
+          } else {
+            alert("报错" + this.status)
+          }
+        }
+      }
+      xhr.open("POST","AjaxRequest6Servlet",true)
+      xhr.send()
+    }
+  }
+</script>
+<input type="button" value="显示宠物信息" id="btn">
+<table width="50%" border="=1px">
+  <tr>
+    <th>宠物编号</th>
+    <th>宠物姓名</th>
+    <th>宠物年龄</th>
+    <th>住址</th>
+  </tr>
+  <tbody id="petsbody"></tbody>
+</table>
+<!--<div id="mydiv"></div>-->
+</body>
+</html>

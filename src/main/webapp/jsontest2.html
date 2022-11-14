@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  var user={
+    "username":"zhangsan",
+    "password":"123456"
+  }
+  var fromJavaServletJsonStr="{\"usercode\":111,\"age\":20}"
+  var jsonobj=JSON.parse(fromJavaServletJsonStr)
+  alert(jsonobj.usercode+","+jsonobj.age)
+</script>
+
+</body>
+</html>

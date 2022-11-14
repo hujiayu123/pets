@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>宠物系统</title>
+</head>
+<body>
+<script>
+    window.onload=function () {
+        document.getElementById("btn").onclick = function () {
+            //发送ajaxpost请求
+            //第一步创建ajax核心对象XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+            //第二步，注册回调函数
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        alert("连接成功")
+                        alert(this.responseText)
+                        //document.getElementById("stutbody").innerHTML = this.responseText
+                        //将json格式字符转化成json对象
+                        var petsList=JSON.parse(this.responseText)//数组中有多个数据
+                        var html=""
+                        for(var i=0;i<petsList.length;i++) {
+                            var pets = petsList[i]
+                            html += "<tr>"
+                            html += "<td>" + pets.id + "</td>"
+                            html += "<td>" + pets.name + "</td>"
+                            html += "<td>" + pets.age + "</td>"
+                            html += "<td>" + pets.addr + "</td>"
+                            html += "</tr>"
+                        }
+                        document.getElementById("petsbody").innerHTML=html
+                    } else {
+                        alert("报错" + this.status)
+                    }
+                }
+            }
+            //开启通道
+            xhr.open("POST", "test", true)
+            xhr.send()
+        }
+    }
+</script>
+<input type="button" value="显示宠物信息" id="btn">
+<table width="50%" border="=1px">
+    <tr>
+        <th>宠物编号</th>
+        <th>宠物姓名</th>
+        <th>宠物年龄</th>
+        <th>住址</th>
+    </tr>
+    <tbody id="petsbody"></tbody>
+</table>
+</body>
+</html>

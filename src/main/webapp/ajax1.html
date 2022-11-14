@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+  window.onload=function (){
+      document.getElementById("helloBtn").onclick=function (){
+    //发送Ajax get 请求
+    var xhr=new XMLHttpRequest();
+    //第二步，注册回调函数，这个函数在XMLHttpRequest对象的readyState状态值发生改变的时候调用
+    xhr.onreadystatechange=function () {
+        //这里的回调函数被调用多次
+        console.log(xhr.readyState)
+        if (xhr.readyState == 4) {
+            //响应结束
+            if (this.status == 404) {
+                alert("对不起，你访问的资源不存在，请检查路径")
+            } else if (this.status == 500) {
+                alert("服务器发生严重的内部错误")
+            } else if (this.status == 200) {
+                alert("完美，响应成功")
+                //通过xmlhttprequest对象获取响应信息
+                alert(this.responseText)
+                document.getElementById("mydiv").innerHTML = this.responseText
+            }
+        }
+    }
+    //开启通道
+      xhr.open("GET","ajaxrequest1",true)
+      //发送请求
+      xhr.send()
+  }
+  }
+
+</script>
+<input type="button"value="hell ajax" id="helloBtn">
+<div id="mydiv"></div>
+</body>
+</html>
